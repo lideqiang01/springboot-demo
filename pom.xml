@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.8.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.lee</groupId>
+    <artifactId>springboot-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springboot-demo</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Frontend插件版本,用于集成angular服务 -->
+        <plugin.frontend.version>0.0.27</plugin.frontend.version>
+        <!-- node插件版本,用于集成angular服务 -->
+        <system.node.version>v10.16.3</system.node.version>
+        <!-- npm插件版本,用于集成angular服务 -->
+        <system.npm.version>6.9.0</system.npm.version>
+        <druid.version>1.1.9</druid.version>
+
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!--mybatis-plus自动的维护了mybatis以及mybatis-spring的依赖，
+          在springboot中这三者不能同时的出现，避免版本的冲突，表示：跳进过这个坑-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <!--集成mybatis -->
+        <!-- 与数据库操作相关的依赖 -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-jdbc</artifactId>-->
+        <!--</dependency>-->
+
+        <!-- mybatisplus集成 -->
+        <!--<dependency>-->
+        <!--<groupId>com.baomidou</groupId>-->
+        <!--<artifactId>mybatisplus-spring-boot-starter</artifactId>-->
+        <!--<version>1.0.5</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>com.baomidou</groupId>-->
+        <!--<artifactId>mybatis-plus</artifactId>-->
+        <!--<version>2.1.8</version>-->
+        <!--</dependency>-->
+
+
+        <!-- 引入Druid依赖，阿里巴巴所提供的数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.29</version>
+        </dependency>
+
+        <!-- 提供mysql驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+        </dependency>
+        <!-- mybatisplus 代码生成器 -->
+        <!-- 模板引擎 -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <!-- 模板引擎，需要指定 mpg.setTemplateEngine(new FreemarkerTemplateEngine()); -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
+
+        <!-- springboot 静态资源访问 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            </dependency>
+
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- 配置Frontend插件，支持前后端结合 -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${plugin.frontend.version}</version>
+                <configuration>
+                    <!-- angular 源码根目录 -->
+                    <workingDirectory>src/main/angular</workingDirectory>
+                    <!-- node 国内镜像下载地址 -->
+                    <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
+                    <!-- node 版本 -->
+                    <nodeVersion>${system.node.version}</nodeVersion>
+                    <!-- npm 版本 -->
+                    <npmVersion>${system.npm.version}</npmVersion>
+                    <!-- 代码安装目录 -->
+                    <installDirectory>target</installDirectory>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeDownloadRoot>http://nodejs.org/dist/</nodeDownloadRoot>
+                            <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
+                            <nodeVersion>${system.node.version}</nodeVersion>
+                        </configuration>
+                    </execution>
+                    <!-- 安装 node 和 npm -->
+                   <!-- <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>-->
+                    <!-- 安装angular项目依赖  -->
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                            <installDirectory>target</installDirectory>
+                        </configuration>
+                    </execution>
+                    <!-- 编译angular源码 -->
+                    <execution>
+                        <id>angular cli build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>
