@@ -52,7 +52,7 @@ public class MybatisPlusGenerator {
                 .setAuthor("admin")
                 //指定输出文件夹位置
                 .setOutputDir("D:\\project\\springboot-demo\\src\\main\\java")
-                .setFileOverride(true)
+                .setFileOverride(false)
                 .setServiceName("%sService");
 
         AutoGenerator autoGenerator = new AutoGenerator();
